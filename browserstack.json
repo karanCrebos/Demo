@@ -1,0 +1,36 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "user": "YOUR_BROWSERSTACK_USERNAME",
+  "key": "YOUR_BROWSERSTACK_ACCESS_KEY",
+  "capabilities": {
+    "projectName": "TestingDemo",
+    "buildName": "Android Test Build",
+    "sessionName": "Android Test Session",
+    "app": "bs://1dc9668f548dbdb8988d772b46c952ac48349a89",
+    "deviceName": "Samsung Galaxy S23",
+    "platformVersion": "13.0",
+    "platformName": "android",
+    "autoGrantPermissions": true,
+    "autoAcceptAlerts": true,
+    "debug": true,
+    "networkLogs": true,
+    "deviceLogs": true
+  },
+  "environments": [
+    {
+      "deviceName": "Samsung Galaxy S23",
+      "platformVersion": "13.0",
+      "platformName": "android"
+    },
+    {
+      "deviceName": "Google Pixel 7",
+      "platformVersion": "13.0",
+      "platformName": "android"
+    },
+    {
+      "deviceName": "OnePlus 9",
+      "platformVersion": "12.0",
+      "platformName": "android"
+    }
+  ]
+} 
