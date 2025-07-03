@@ -43,6 +43,6 @@ jobs:
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebase.json
           firebase appdistribution:distribute app/build/outputs/apk/debug/app-debug.apk \
-            --app 1:162093106925:android:7c11cdbc79a721f3e22ee4 \
+            --app 1:162093106925:android:088dfebbbdfb1d9de22ee4 \
             --release-notes "New build from GitHub Actions" \
             --testers "Karanveer@crebos.online"
