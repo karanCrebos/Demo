@@ -57,7 +57,14 @@ BROWSERSTACK_ACCESS_KEY=your_actual_access_key
 
 #### Option 3: Run Specific Test
 ```bash
+# Run specific test method
 ./gradlew connectedAndroidTest --tests BrowserStackTest.testAppLaunch
+
+# Run button click tests
+./gradlew connectedAndroidTest --tests ButtonClickTest
+
+# Run specific button click test
+./gradlew connectedAndroidTest --tests ButtonClickTest.testButtonClickIncrementsCounter
 ```
 
 ## Test Structure
@@ -69,11 +76,18 @@ The project includes the following test classes:
   - `testUIElements()`: Tests UI element visibility
   - `testAppFunctionality()`: Tests app state and transitions
 
+- **ButtonClickTest.kt**: Specialized test class for button interaction testing
+  - `testButtonClickIncrementsCounter()`: Tests single button click functionality
+  - `testMultipleButtonClicks()`: Tests multiple consecutive button clicks
+  - `testButtonIsClickable()`: Verifies button is present and clickable
+
 ## Configuration Files
 
 - **browserstack.json**: BrowserStack configuration with device settings
 - **gradle.properties**: Contains BrowserStack credentials
 - **app/build.gradle.kts**: Project dependencies and build configuration
+- **run-browserstack-tests.sh**: Script to run all BrowserStack tests
+- **run-button-click-test.sh**: Script to run button click tests specifically
 
 ## Supported Devices
 
