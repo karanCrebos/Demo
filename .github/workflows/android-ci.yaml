@@ -72,7 +72,7 @@ jobs:
             --app 1:162093106925:android:088dfebbbdfb1d9de22ee4 \
             --release-notes "New build from GitHub Actions - ${{ github.sha }}" \
             --groups 'internal-testers' \
-            --token ${{ secrets.FIREBASE_TOKEN }}
+            --token ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
 
       - name: Cleanup
         run: rm -f service-account-key.json
