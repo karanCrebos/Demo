@@ -67,16 +67,34 @@ jobs:
           FIREBASE_TESTERS: ${{ secrets.FIREBASE_TESTERS }}
         run: |
           echo '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' > firebase.json
-          ./fetch-firebase-testers.sh
+          
+          # Check if FIREBASE_TESTERS secret is set
+          if [ -z "$FIREBASE_TESTERS" ]; then
+            echo "⚠️  FIREBASE_TESTERS secret not found. Using default group 'internal-testers'"
+            echo "TESTERS=internal-testers" >> $GITHUB_ENV
+          else
+            echo "✅ FIREBASE_TESTERS found, using dynamic fetch"
+            ./fetch-firebase-testers.sh
+          fi
 
       - name: Upload to Firebase App Distribution
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/firebase.json
         run: |
-          firebase appdistribution:distribute app/build/outputs/apk/debug/app-debug.apk \
-            --app 1:162093106925:android:088dfebbbdfb1d9de22ee4 \
-            --release-notes "New build from GitHub Actions" \
-            --testers "$TESTERS"
+          # Check if TESTERS is a group or email list
+          if [[ "$TESTERS" == *"@"* ]]; then
+            echo "📧 Distributing to specific testers: $TESTERS"
+            firebase appdistribution:distribute app/build/outputs/apk/debug/app-debug.apk \
+              --app 1:162093106925:android:088dfebbbdfb1d9de22ee4 \
+              --release-notes "New build from GitHub Actions" \
+              --testers "$TESTERS"
+          else
+            echo "👥 Distributing to group: $TESTERS"
+            firebase appdistribution:distribute app/build/outputs/apk/debug/app-debug.apk \
+              --app 1:162093106925:android:088dfebbbdfb1d9de22ee4 \
+              --release-notes "New build from GitHub Actions" \
+              --groups "$TESTERS"
+          fi
 
       - name: Cleanup
         run: rm -f service-account-key.json
