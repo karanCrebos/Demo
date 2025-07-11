@@ -91,3 +91,35 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
+
+// Custom task to run Appium tests on BrowserStack
+tasks.register("runBrowserStackTests") {
+    dependsOn("assembleDebugAndroidTest")
+    
+    doLast {
+        println("🚀 Running Appium tests on BrowserStack...")
+        
+        // Set up environment variables for tests
+        val appId = project.findProperty("appId") ?: "bs://1dc9668f548dbdb8988d772b46c952ac48349a89"
+        val username = project.findProperty("browserstackUsername") ?: ""
+        val accessKey = project.findProperty("browserstackAccessKey") ?: ""
+        
+        // Set environment variables
+        environment("APP_ID", appId)
+        environment("BROWSERSTACK_USERNAME", username)
+        environment("BROWSERSTACK_ACCESS_KEY", accessKey)
+        
+        // Run tests using JUnit directly without requiring Android device
+        exec {
+            workingDir = projectDir
+            commandLine(
+                "java", "-cp", 
+                "${project.buildDir}/intermediates/javac/debugAndroidTest/classes:" +
+                configurations.androidTestImplementation.asPath,
+                "org.junit.runner.JUnitCore",
+                "com.example.testingdemo.BrowserStackTest",
+                "com.example.testingdemo.ButtonClickTest"
+            )
+        }
+    }
+}
