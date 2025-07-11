@@ -79,7 +79,7 @@ jobs:
             -d '{
               "app": "${{ steps.upload-app.outputs.app_id }}",
               "testSuite": "${{ steps.upload-test.outputs.test_id }}",
-              "devices": ["Samsung Galaxy S21"],
+              "devices": ["Galaxy S24 Ultra v14.0"],
               "deviceLogs": true,
               "networkLogs": true
             }')
