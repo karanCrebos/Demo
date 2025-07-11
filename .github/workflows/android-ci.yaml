@@ -70,23 +70,23 @@ jobs:
           echo "✅ Test APK uploaded: $TEST_ID"
           echo "test_id=$TEST_ID" >> $GITHUB_OUTPUT
 
-             - name: Trigger Espresso tests on BrowserStack
-         run: |
-           echo "🚀 Triggering Espresso tests on BrowserStack..."
-           RESPONSE=$(curl -u "${{ secrets.BROWSERSTACK_USERNAME }}:${{ secrets.BROWSERSTACK_ACCESS_KEY }}" \
-             -X POST "https://api-cloud.browserstack.com/app-automate/espresso/v2/build" \
-             -H "Content-Type: application/json" \
-             -d '{
-               "app": "${{ steps.upload-app.outputs.app_id }}",
-               "testSuite": "${{ steps.upload-test.outputs.test_id }}",
-               "devices": ["Samsung Galaxy S24 Ultra-14.0"],
-               "deviceLogs": true,
-               "networkLogs": true,
-               "projectName": "TestingDemo",
-               "buildName": "GitHub Actions Build"
-             }')
+      - name: Trigger Espresso tests on BrowserStack
+        run: |
+          echo "🚀 Triggering Espresso tests on BrowserStack..."
+          RESPONSE=$(curl -u "${{ secrets.BROWSERSTACK_USERNAME }}:${{ secrets.BROWSERSTACK_ACCESS_KEY }}" \
+            -X POST "https://api-cloud.browserstack.com/app-automate/espresso/v2/build" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "app": "${{ steps.upload-app.outputs.app_id }}",
+              "testSuite": "${{ steps.upload-test.outputs.test_id }}",
+              "devices": ["Samsung Galaxy S24 Ultra-14.0"],
+              "deviceLogs": true,
+              "networkLogs": true,
+              "projectName": "TestingDemo",
+              "buildName": "GitHub Actions Build"
+            }')
 
-           echo "Response: $RESPONSE"
+          echo "Response: $RESPONSE"
 
       - name: Upload APK as Artifact (optional)
         uses: actions/upload-artifact@v4
