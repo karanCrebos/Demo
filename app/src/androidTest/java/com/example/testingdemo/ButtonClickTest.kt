@@ -1,11 +1,14 @@
 package com.example.testingdemo
 
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import io.appium.java_client.android.AndroidDriver
 import io.appium.java_client.android.options.UiAutomator2Options
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.openqa.selenium.By
 import org.openqa.selenium.WebElement
 import org.openqa.selenium.support.ui.ExpectedConditions
@@ -13,6 +16,7 @@ import org.openqa.selenium.support.ui.WebDriverWait
 import java.net.URL
 import java.time.Duration
 
+@RunWith(AndroidJUnit4::class)
 class ButtonClickTest {
     
     private lateinit var driver: AndroidDriver
@@ -20,15 +24,12 @@ class ButtonClickTest {
     
     @Before
     fun setUp() {
-        // Get app ID from environment variable or use default
-        val appId = System.getenv("APP_ID") ?: "bs://1dc9668f548dbdb8988d772b46c952ac48349a89"
-        
         val options = UiAutomator2Options()
             .setPlatformName("android")
             .setAutomationName("UiAutomator2")
             .setDeviceName("Samsung Galaxy S23")
             .setPlatformVersion("13.0")
-            .setApp(appId)
+            .setApp("bs://1dc9668f548dbdb8988d772b46c952ac48349a89")
             .setAutoGrantPermissions(true)
 
         // BrowserStack specific capabilities
