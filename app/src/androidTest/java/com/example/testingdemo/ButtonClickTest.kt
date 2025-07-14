@@ -43,6 +43,10 @@ class ButtonClickTest {
             "appiumLogs" to true
         ))
         
+        // Use legacy HTTP client for Android compatibility
+        options.setCapability("appium:useNewWDA", false)
+        options.setCapability("appium:shouldTerminateApp", true)
+        
         // BrowserStack credentials
         val username = "crebosonlinesolu1"
         val accessKey = "De8AQLcmnCaCrEtF5yy7"

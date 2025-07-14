@@ -10,10 +10,10 @@ android {
     
     configurations.all {
         resolutionStrategy {
-            force("org.seleniumhq.selenium:selenium-api:4.18.1")
-            force("org.seleniumhq.selenium:selenium-support:4.18.1")
-            force("org.seleniumhq.selenium:selenium-remote-driver:4.18.1")
-            force("org.seleniumhq.selenium:selenium-chrome-driver:4.18.1")
+            force("org.seleniumhq.selenium:selenium-api:3.141.59")
+            force("org.seleniumhq.selenium:selenium-support:3.141.59")
+            force("org.seleniumhq.selenium:selenium-remote-driver:3.141.59")
+            force("org.seleniumhq.selenium:selenium-chrome-driver:3.141.59")
         }
     }
 
@@ -88,24 +88,24 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     
-    // BrowserStack dependencies
-    androidTestImplementation("io.appium:java-client:9.0.0") {
+    // BrowserStack dependencies - using Selenium 3.x for Android compatibility
+    androidTestImplementation("io.appium:java-client:7.6.0") {
         exclude(group = "commons-logging", module = "commons-logging")
         exclude(group = "org.slf4j", module = "slf4j-api")
     }
-    androidTestImplementation("org.seleniumhq.selenium:selenium-java:4.18.1") {
+    androidTestImplementation("org.seleniumhq.selenium:selenium-java:3.141.59") {
         exclude(group = "commons-logging", module = "commons-logging")
         exclude(group = "org.slf4j", module = "slf4j-api")
     }
-    androidTestImplementation("io.github.bonigarcia:webdrivermanager:5.7.0") {
+    androidTestImplementation("io.github.bonigarcia:webdrivermanager:4.5.3") {
         exclude(group = "commons-logging", module = "commons-logging")
         exclude(group = "org.slf4j", module = "slf4j-api")
     }
     
     // Force specific versions to resolve conflicts
-    androidTestImplementation("org.seleniumhq.selenium:selenium-api:4.18.1")
-    androidTestImplementation("org.seleniumhq.selenium:selenium-support:4.18.1")
-    androidTestImplementation("org.seleniumhq.selenium:selenium-remote-driver:4.18.1")
+    androidTestImplementation("org.seleniumhq.selenium:selenium-api:3.141.59")
+    androidTestImplementation("org.seleniumhq.selenium:selenium-support:3.141.59")
+    androidTestImplementation("org.seleniumhq.selenium:selenium-remote-driver:3.141.59")
     
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
