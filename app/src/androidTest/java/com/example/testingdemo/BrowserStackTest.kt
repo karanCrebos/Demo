@@ -26,7 +26,7 @@ class BrowserStackTest {
         val options = UiAutomator2Options()
             .setPlatformName("android")
             .setAutomationName("UiAutomator2")
-            .setDeviceName("Samsung Galaxy S23")
+            .setDeviceName("Samsung Galaxy S24 Ultra-14.0")
             .setPlatformVersion("13.0")
             .setApp("bs://1dc9668f548dbdb8988d772b46c952ac48349a89")
             .setAutoGrantPermissions(true)
