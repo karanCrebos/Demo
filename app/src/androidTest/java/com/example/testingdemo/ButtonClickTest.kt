@@ -43,9 +43,7 @@ class ButtonClickTest {
             "appiumLogs" to true
         ))
         
-        // Use legacy HTTP client for Android compatibility
-        options.setCapability("appium:useNewWDA", false)
-        options.setCapability("appium:shouldTerminateApp", true)
+
         
         // BrowserStack credentials
         val username = "crebosonlinesolu1"
@@ -53,54 +51,44 @@ class ButtonClickTest {
         
         val browserStackUrl = "https://$username:$accessKey@hub-cloud.browserstack.com/wd/hub"
         
-        try {
-            driver = AndroidDriver(URL(browserStackUrl), options)
-            wait = WebDriverWait(driver, Duration.ofSeconds(30))
-            
-            // Wait for app to load
-            Thread.sleep(5000)
-            println("✅ Driver initialized successfully")
-        } catch (e: Exception) {
-            println("❌ Error initializing driver: ${e.message}")
-            throw e
-        }
+        driver = AndroidDriver(URL(browserStackUrl), options)
+        wait = WebDriverWait(driver, Duration.ofSeconds(30))
+        
+        // Wait for app to load
+        Thread.sleep(3000)
     }
     
     @Test
     fun testButtonClickIncrementsCounter() {
         println("🧪 Starting button click test...")
         
-        // Wait for the app to be fully loaded and find the count text
-        val countElement = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//*[contains(@text, 'Count:')]")
+        // Wait for the app to be fully loaded
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//android.widget.TextView[contains(@text, 'Count:')]")
         ))
         
         // Get initial count value
-        val initialText = countElement.text
+        val initialCountElement = wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//android.widget.TextView[contains(@text, 'Count:')]")
+        ))
+        val initialText = initialCountElement.text
         val initialCount = extractCountFromText(initialText)
         println("📊 Initial count: $initialCount")
         
-        // Find and click the "Add" button using multiple strategies
-        val addButton = try {
-            wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//*[@text='Add']")
-            ))
-        } catch (e: Exception) {
-            println("⚠️ First strategy failed, trying alternative...")
-            wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//*[contains(@text, 'Add')]")
-            ))
-        }
+        // Find and click the "Add" button
+        val addButton = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//android.widget.Button[@text='Add']")
+        ))
         
         println("🔘 Found Add button, clicking...")
         addButton.click()
         
         // Wait a moment for the UI to update
-        Thread.sleep(2000)
+        Thread.sleep(1000)
         
         // Get the updated count value
         val updatedCountElement = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//*[contains(@text, 'Count:')]")
+            By.xpath("//android.widget.TextView[contains(@text, 'Count:')]")
         ))
         val updatedText = updatedCountElement.text
         val updatedCount = extractCountFromText(updatedText)
@@ -116,37 +104,33 @@ class ButtonClickTest {
         println("🧪 Starting multiple button clicks test...")
         
         // Wait for the app to be fully loaded
-        val countElement = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//*[contains(@text, 'Count:')]")
+        wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//android.widget.TextView[contains(@text, 'Count:')]")
         ))
         
         // Get initial count
-        val initialCount = extractCountFromText(countElement.text)
+        val initialCountElement = wait.until(ExpectedConditions.presenceOfElementLocated(
+            By.xpath("//android.widget.TextView[contains(@text, 'Count:')]")
+        ))
+        val initialCount = extractCountFromText(initialCountElement.text)
         println("📊 Initial count: $initialCount")
         
-        // Find the Add button using multiple strategies
-        val addButton = try {
-            wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//*[@text='Add']")
-            ))
-        } catch (e: Exception) {
-            println("⚠️ First strategy failed, trying alternative...")
-            wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//*[contains(@text, 'Add')]")
-            ))
-        }
+        // Find the Add button
+        val addButton = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//android.widget.Button[@text='Add']")
+        ))
         
         // Click the button multiple times
         val clickCount = 3
         for (i in 1..clickCount) {
             println("🔘 Clicking Add button (click $i of $clickCount)...")
             addButton.click()
-            Thread.sleep(1000) // Increased delay between clicks
+            Thread.sleep(500) // Small delay between clicks
         }
         
         // Get final count
         val finalCountElement = wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//*[contains(@text, 'Count:')]")
+            By.xpath("//android.widget.TextView[contains(@text, 'Count:')]")
         ))
         val finalCount = extractCountFromText(finalCountElement.text)
         println("📊 Final count: $finalCount")
@@ -163,25 +147,18 @@ class ButtonClickTest {
         
         // Wait for the app to be fully loaded
         wait.until(ExpectedConditions.presenceOfElementLocated(
-            By.xpath("//*[contains(@text, 'Count:')]")
+            By.xpath("//android.widget.TextView[contains(@text, 'Count:')]")
         ))
         
-        // Verify the Add button is present and clickable using multiple strategies
-        val addButton = try {
-            wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//*[@text='Add']")
-            ))
-        } catch (e: Exception) {
-            println("⚠️ First strategy failed, trying alternative...")
-            wait.until(ExpectedConditions.elementToBeClickable(
-                By.xpath("//*[contains(@text, 'Add')]")
-            ))
-        }
+        // Verify the Add button is present and clickable
+        val addButton = wait.until(ExpectedConditions.elementToBeClickable(
+            By.xpath("//android.widget.Button[@text='Add']")
+        ))
         
         // Verify button properties
         assert(addButton.isDisplayed) { "Add button should be displayed" }
         assert(addButton.isEnabled) { "Add button should be enabled" }
-        assert(addButton.text.contains("Add")) { "Button text should contain 'Add'" }
+        assertEquals("Add", addButton.text) { "Button text should be 'Add'" }
         
         println("✅ Button clickability test passed!")
     }
