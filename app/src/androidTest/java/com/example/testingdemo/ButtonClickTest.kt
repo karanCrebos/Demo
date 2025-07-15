@@ -3,7 +3,7 @@ package com.example.testingdemo
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import io.appium.java_client.android.AndroidDriver
-import io.appium.java_client.android.options.UiAutomator2Options
+import org.openqa.selenium.remote.DesiredCapabilities
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -24,16 +24,16 @@ class ButtonClickTest {
     
     @Before
     fun setUp() {
-        val options = UiAutomator2Options()
-            .setPlatformName("android")
-            .setAutomationName("UiAutomator2")
-            .setDeviceName("Samsung Galaxy S23")
-            .setPlatformVersion("13.0")
-            .setApp("bs://1dc9668f548dbdb8988d772b46c952ac48349a89")
-            .setAutoGrantPermissions(true)
+        val capabilities = DesiredCapabilities()
+        capabilities.setCapability("platformName", "android")
+        capabilities.setCapability("automationName", "UiAutomator2")
+        capabilities.setCapability("deviceName", "Samsung Galaxy S23")
+        capabilities.setCapability("platformVersion", "13.0")
+        capabilities.setCapability("app", "bs://1dc9668f548dbdb8988d772b46c952ac48349a89")
+        capabilities.setCapability("autoGrantPermissions", true)
 
         // BrowserStack specific capabilities
-        options.setCapability("bstack:options", mapOf(
+        capabilities.setCapability("bstack:options", mapOf(
             "projectName" to "TestingDemo",
             "buildName" to "Button Click Test Build",
             "sessionName" to "Button Click Test Session",
@@ -43,15 +43,13 @@ class ButtonClickTest {
             "appiumLogs" to true
         ))
         
-
-        
         // BrowserStack credentials
         val username = "crebosonlinesolu1"
         val accessKey = "De8AQLcmnCaCrEtF5yy7"
         
         val browserStackUrl = "https://$username:$accessKey@hub-cloud.browserstack.com/wd/hub"
         
-        driver = AndroidDriver(URL(browserStackUrl), options)
+        driver = AndroidDriver(URL(browserStackUrl), capabilities)
         wait = WebDriverWait(driver, Duration.ofSeconds(30))
         
         // Wait for app to load
