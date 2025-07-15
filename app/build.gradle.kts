@@ -81,14 +81,11 @@ dependencies {
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
     
-    // BrowserStack dependencies
-    androidTestImplementation("io.appium:java-client:8.5.1") {
+    // BrowserStack dependencies - using Android-compatible versions
+    androidTestImplementation("io.appium:java-client:7.6.0") {
         exclude(group = "commons-logging", module = "commons-logging")
     }
-    androidTestImplementation("org.seleniumhq.selenium:selenium-java:4.15.0") {
-        exclude(group = "commons-logging", module = "commons-logging")
-    }
-    androidTestImplementation("io.github.bonigarcia:webdrivermanager:5.6.2") {
+    androidTestImplementation("org.seleniumhq.selenium:selenium-java:3.141.59") {
         exclude(group = "commons-logging", module = "commons-logging")
     }
     
